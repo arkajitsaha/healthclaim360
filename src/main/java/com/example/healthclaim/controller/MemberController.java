@@ -1,7 +1,10 @@
 package com.example.healthclaim.controller;
 
+import com.example.healthclaim.dto.MemberRequestDTO;
+import com.example.healthclaim.dto.MemberResponseDTO;
 import com.example.healthclaim.entity.Member;
 import com.example.healthclaim.service.MemberService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,8 +23,8 @@ public class MemberController {
     }
 
     @PostMapping
-    public Member createMember(@RequestBody Member member) {
-        return memberService.createMember(member);
+    public MemberResponseDTO createMember(@Valid @RequestBody MemberRequestDTO memberRequest) {
+        return memberService.createMember(memberRequest);
     }
 
     @GetMapping

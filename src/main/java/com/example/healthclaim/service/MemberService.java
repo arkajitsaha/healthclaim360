@@ -1,5 +1,7 @@
 package com.example.healthclaim.service;
 
+import com.example.healthclaim.dto.MemberRequestDTO;
+import com.example.healthclaim.dto.MemberResponseDTO;
 import com.example.healthclaim.entity.Member;
 import com.example.healthclaim.repository.MemberRepository;
 import org.springframework.stereotype.Service;
@@ -15,8 +17,26 @@ public class MemberService {
         this.memberRepository = memberRepository;
     }
 
-    public Member createMember(Member member) {
-        return memberRepository.save(member);
+    public MemberResponseDTO createMember(MemberRequestDTO request) {
+
+        Member member = new Member();
+
+        member.setName(request.getName());
+        member.setEmail(request.getEmail());
+        member.setPhone(request.getPhone());
+        member.setPolicyNumber(request.getPolicyNumber());
+        member.setStatus(request.getStatus());
+
+        Member savedMember = memberRepository.save(member);
+
+        return new MemberResponseDTO(
+                savedMember.getId(),
+                savedMember.getName(),
+                savedMember.getEmail(),
+                savedMember.getPhone(),
+                savedMember.getPolicyNumber(),
+                savedMember.getStatus()
+        );
     }
 
     public List<Member> getAllMembers() {
